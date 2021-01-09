@@ -17,9 +17,15 @@ export const getFilteredTrips = ({ trips, filters }) => {
   }
 
   // filter by tags
-  if (filters.tags) {
-    const pattern = new RegExp(filters.tags, 'i');
-    output = output.filter(trip => pattern.test(trip.tags));
+  if (filters.tags.length > 0) {
+    output = output.filter((trip) => {
+      for (let tag of filters.tags) {
+        if (!trip.tags.includes(tag)) {
+          return false;
+        }
+        return true;
+      }
+    });
   }
 
   // TODO - sort by cost descending (most expensive goes first)
